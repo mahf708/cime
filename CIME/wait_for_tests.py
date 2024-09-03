@@ -2,8 +2,7 @@
 import queue
 import os, time, threading, socket, signal, shutil, glob
 
-# pylint: disable=import-error
-from distutils.spawn import find_executable
+import shutil
 import logging
 import xml.etree.ElementTree as xmlet
 
@@ -516,7 +515,7 @@ CurlOptions: CURLOPT_SSL_VERIFYPEER_OFF;CURLOPT_SSL_VERIFYHOST_OFF
             hostname,
             cdash_build_name,
             cdash_project,
-            find_executable("scp"),
+            shutil.which("scp"),
             cdash_timestamp,
             drop_method,
         )

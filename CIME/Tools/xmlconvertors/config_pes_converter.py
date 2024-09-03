@@ -9,6 +9,7 @@ The location of these files are needed by the script:
     CIME5: config/acme/allactive/config_pesall.xml
 """
 import os, sys
+import shutil
 
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -17,7 +18,6 @@ sys.path.insert(
 from CIME import utils
 from CIME.Tools.standard_script_setup import *
 from CIME.utils import run_cmd
-from distutils.spawn import find_executable
 import xml.etree.ElementTree as ET
 import grid_xml_converter
 
@@ -242,7 +242,7 @@ class PesTree(grid_xml_converter.DataTree):
                 root.append(ET.Element("WITH"))
             if a is not None:
                 root.append(a.to_cime5())
-        xmllint = find_executable("xmllint")
+        xmllint = shutil.which("xmllint")
         if xmllint is not None:
             run_cmd(
                 "{} --format --output {} -".format(xmllint, newfilename),

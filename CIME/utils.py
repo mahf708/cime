@@ -4,6 +4,7 @@ Warning: you cannot use CIME Classes in this module as it causes circular depend
 """
 
 import shlex
+import shutil
 import configparser
 import io, logging, gzip, sys, os, time, re, shutil, glob, string, random, importlib, fnmatch
 import importlib.util
@@ -12,8 +13,6 @@ import stat as statlib
 from argparse import Action
 from contextlib import contextmanager
 
-# pylint: disable=deprecated-module
-from distutils import file_util
 
 # Return this error code if the scripts worked but tests failed
 TESTS_FAILED_ERR_CODE = 100
@@ -1414,7 +1413,7 @@ def safe_copy(src_path, tgt_path, preserve_meta=True):
 
         if owner_uid == os.getuid():
             # I am the owner, copy file contents, permissions, and metadata
-            file_util.copy_file(
+            shutil.copyfile(
                 src_path,
                 tgt_path,
                 preserve_mode=preserve_meta,
@@ -1428,7 +1427,7 @@ def safe_copy(src_path, tgt_path, preserve_meta=True):
     else:
         # We are making a new file, copy file contents, permissions, and metadata.
         # This can fail if the underlying directory is not writable by current user.
-        file_util.copy_file(
+        shutil.copyfile(
             src_path,
             tgt_path,
             preserve_mode=preserve_meta,
